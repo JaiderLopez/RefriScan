@@ -1,4 +1,5 @@
 import flet as ft
+from interfaces.class_scan import ScanDoc
 
 class AppMain(ft.Container):
    # ---------------------------------------- FUNCIONES ----------------------------------------
@@ -7,7 +8,8 @@ class AppMain(ft.Container):
       if data == 0:
          self.cont_main.content = ft.Text("Data Project", size=30, color= ft.colors.RED_700)
       elif data == 1:
-         self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
+         # self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
+         self.cont_main.content = self.container_scan.content
       elif data == 2:
          self.cont_main.content = ft.Text("Table Students Containt", size=30, color= ft.colors.RED_700)
       elif data == 3:
@@ -21,6 +23,7 @@ class AppMain(ft.Container):
    def __init__(self, page: ft.Page):
       super().__init__()
       self.page = page
+      self.container_scan = ScanDoc(self.page)
       ...
       #           nav_rail
       self.nav_rail = ft.NavigationRail(
@@ -55,13 +58,18 @@ class AppMain(ft.Container):
       )
       ...
       #           containers
+      # self.cont_main = ft.Column(expand= True, horizontal_alignment= ft.CrossAxisAlignment.CENTER, auto_scroll=True,
+      #                            controls= [ft.Text("Que quieres hacer???", size=30, color= ft.colors.ORANGE)])
       self.cont_main = ft.Container(
          expand=True,
          alignment=ft.alignment.center,
-         padding=20,
+         padding=5,
          # content= self.clase-objeto.content,
-         content= ft.Text("Que quieres hacer???", size=30, color= ft.colors.ORANGE)
+         # content= ft.Text("Que quieres hacer???", size=30, color= ft.colors.ORANGE)
+         content= ft.Row(expand= True, auto_scroll=True,
+                         controls=[ft.Text("Que quieres hacer???", size=30, color= ft.colors.ORANGE)])
       )
+      ...
       #           rows
       self.row_main = ft.Row(
          expand=True,
@@ -73,6 +81,10 @@ class AppMain(ft.Container):
    def build(self):
    #           controles generales
       self.page.title = "APP - REFRISCAN"
+      self.page.window.min_width = 710
+      self.page.window.min_height = 800
+      self.page.window.width = 720
+      self.page.window.height = 810
    # ---------------------------------------- GRAPHICS ----------------------------------------
       self.page.add(self.row_main)
    ...

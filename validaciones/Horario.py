@@ -38,7 +38,5 @@ def validarEntrega(id):
             return comprobar(id,"sabado",hora)
 
 
-"""
 if __name__ == '__main__':
-    print(validarEntrega('1193048051'))
-""" 
+    print(validarEntrega('1001027830'))
