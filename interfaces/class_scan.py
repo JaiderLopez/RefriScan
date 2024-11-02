@@ -70,6 +70,7 @@ class ScanDoc(ft.Container):
          # time.sleep(0.03)
       print("::::::::: HILO PAUSADO O FINALIZADO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
    ...
+
    def fun_toget_doc(self, image):
       # Especifica la ruta de Tesseract manualmente para no agregar el PATH como variable de entorno
       pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -144,15 +145,20 @@ class ScanDoc(ft.Container):
    def __init__(self, page: ft.Page):
       super().__init__()
       self.page = page
+      #####NOTA: Si se va usar una camara ip, entonces descomentar las lineas que tienen (#-->ip) y comentar (#-->pc)
       ##          camara
       self.capture = cv2.VideoCapture(0) #-->pc
       # self.capture = cv2.VideoCapture("http://192.168.101.87:3660/video") #-->ip
+      
       self.frame = None #frame qué se analizará para extraer el doc del estudiante
+      
       self.threading_isrunning = True #controlador de hilo
       self.threading = threading.Thread(target= self.fun_update_frame_camera) #-->pc
       # self.threading = threading.Thread(target= self.fun_update_frame_camera_ip) #-->ip
-      self.threading.start()
+      
+      self.threading.start() #inicia el hilo
 
+      #imagen qué se actualiza como camara en la interfaz
       self.camera_img = ft.Image(width=345, height=245, src_base64=base64.b64encode(open(r"imgs\image_not_found.jpg", 'rb').read()).decode("utf-8"))
       ...
 
@@ -173,6 +179,7 @@ class ScanDoc(ft.Container):
       ...
 
       ##          cards
+      #card de frame - camara
       self.card_cam_view = ft.Card(width= 350, height=300,
                                    content= ft.Row(alignment="center", expand=True,
                                              controls=[ft.Column(expand=True, horizontal_alignment="center",
@@ -180,6 +187,7 @@ class ScanDoc(ft.Container):
                                  #   ft.Row(expand=True, alignment="center", vertical_alignment="center",
                                  #                   controls=[self.camera_img, self.btn_take_picture]))
                                                    # controls=[ft.Text("CAM SCAN")]))
+      #card de validación (ALLOW OR DENEGATED)
       self.card_doc_description = ft.Card(
          width=420, height=180,
          content=ft.Row(expand=True, alignment="center", vertical_alignment="center",
@@ -192,9 +200,7 @@ class ScanDoc(ft.Container):
                ]
          )
       )
-      
-      
-
+  
       ##          rows
       self.row_logo = ft.Row(alignment='center', height= 150,
                              controls=[self.logo])
@@ -205,7 +211,7 @@ class ScanDoc(ft.Container):
                                                                 ft.Row(controls=[self.lb_doc, self.btn_validate], alignment='center'), 
                                                                 self.card_doc_description]))])
       
-      
+      #Lo que exporta esta clase para la app-main
       self.content = ft.Container(expand=True,
                                   content= ft.Column(expand=True, horizontal_alignment= ft.CrossAxisAlignment.CENTER,
                                                      controls=[self.row_logo, self.row_container]))
