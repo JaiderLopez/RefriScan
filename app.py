@@ -19,6 +19,7 @@ class AppMain(ft.Container):
          self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
       self.cont_main.update()
    ...
+   
    # ---------------------------------------- CONTROLES ----------------------------------------
    def __init__(self, page: ft.Page):
       super().__init__()
