@@ -1,0 +1,26 @@
+{
+    "1001152975": {
+        "password": "1001.pswd",
+        "type": "admin",
+        "name": "Jaider Lopez",
+        "is_activate": true
+    },
+    "1040358267": {
+        "password": "1040.pswd",
+        "type": "user",
+        "name": "Santiago Perez",
+        "is_activate": true
+    },
+    "1": { 
+        "password": "1",
+        "type": "admin",
+        "name": "John Doe",
+        "is_activate": true
+    },
+    "2": {
+        "password": "2",
+        "type": "user",
+        "name": "John Doe",
+        "is_activate": true
+    }
+}

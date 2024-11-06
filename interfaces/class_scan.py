@@ -1,7 +1,7 @@
 import flet as ft
 
-# import validaciones.valid_horario as valid #general, para correr la app.py
-import valid_horario as valid #temporal, para pruebas del modulo
+import validaciones.valid_horario as valid #general, para correr la app.py
+# import valid_horario as valid #temporal, para pruebas del modulo
 
 import cv2 #captura de video
 import threading #gestion de hilos
@@ -63,108 +63,128 @@ class ScanDoc(ft.Container):
    ...
    
    def fun_update_frame_camera(self, ):
-      while self.threading_isrunning:
-         ret, frame = self.capture.read()
-         if ret:
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+      try:
+         while self.threading_isrunning:
+            ret, frame = self.capture.read()
+            if ret:
+               frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-            #las siguientes 2 lineas gestionan la lectura sin tener que press boton de captura
-            # self.threading_txt = threading.Thread(target= self.fun_toget_doc(frame)) #-->pc
-            # self.threading_txt.start() #inicia el hilo
-            
-            frame = cv2.flip(frame, 1) #invierte frame, para que se vea derecho si usa la camara selfie
-            _, buffer = cv2.imencode('.png', frame)
-            frame_b64 = base64.b64encode(buffer).decode("utf-8")
-            
-            #actualiza el contenedor de la imagen de la camara (simula grabación en tiempo real, realidad: frama-frame)
-            self.camera_img.src_base64 = frame_b64
-            
-            self.page.update()
-         else:
-            self.camera_img.src_base64 = base64.b64encode(open(r"imgs\image_not_found.jpg", 'rb').read()).decode("utf-8")
-         # time.sleep(0.03)
-      print("::::::::: HILO PAUSADO O FINALIZADO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+               #las siguientes 2 lineas gestionan la lectura sin tener que press boton de captura
+               # self.threading_txt = threading.Thread(target= self.fun_toget_doc(frame)) #-->pc
+               # self.threading_txt.start() #inicia el hilo
+               
+               frame = cv2.flip(frame, 1) #invierte frame, para que se vea derecho si usa la camara selfie
+               _, buffer = cv2.imencode('.png', frame)
+               frame_b64 = base64.b64encode(buffer).decode("utf-8")
+               
+               #actualiza el contenedor de la imagen de la camara (simula grabación en tiempo real, realidad: frama-frame)
+               self.camera_img.src_base64 = frame_b64
+               
+               self.page.update()
+            else:
+               self.camera_img.src_base64 = base64.b64encode(open(r"imgs\image_not_found.jpg", 'rb').read()).decode("utf-8")
+            # time.sleep(0.03)
+         print("::::::::: HILO PAUSADO O FINALIZADO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      except Exception as e:
+         print(f"Error de captura de video: {e}")
+         # self.threading_isrunning = True
+         # self.threading = threading.Thread(target=self.fun_update_frame_camera)
+         # self.threading.start()
+         self.page.update()
+
    ...
 
    def fun_toget_doc(self, image): 
       # print(self.lb_doc.value) 
+      try:
+         #gestionar el hilo para que no se habra uno nuevo sin haber terminado
+         with self.lock: 
+            if self.lb_doc.value in self.data_: 
+               print("Valor ya presente en los datos, omitiendo el hilo") 
+               return 
+            if self.threading_isrunning_txt: 
+               print("Hilo ya en ejecución, omitiendo") 
+               return 
+            
+            print("ENTRANDO AL HILO GET_DOC") 
+            #!cierro el hilo, y no habre hasta que este de respuesta
+            self.threading_isrunning_txt = True 
 
-      #gestionar el hilo para que no se habra uno nuevo sin haber terminado
-      with self.lock: 
-         if self.lb_doc.value in self.data_: 
-            print("Valor ya presente en los datos, omitiendo el hilo") 
-            return 
-         if self.threading_isrunning_txt: 
-            print("Hilo ya en ejecución, omitiendo") 
-            return 
-         
-         print("ENTRANDO AL HILO GET_DOC") 
-         #!cierro el hilo, y no habre hasta que este de respuesta
-         self.threading_isrunning_txt = True 
+            # Especifica la ruta de Tesseract manualmente para no agregar el PATH como variable de entorno 
+            pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
+            
+            # Convertimos el contenido de la imagen a str 
+            extracted_text = pytesseract.image_to_string(image) 
+            
+            # Filtrar solo los números usando expresiones regulares // PARA CEDULAS VIEJAS 
+            numbers = re.findall(r'\d+', extracted_text) 
+            
+            # Extrae solo secuencias de dígitos 
+            # Usar una expresión regular para encontrar la línea que contiene "NUIP"// PARA CEDULAS NUEVAS  
+            match = re.search(r'NUIP \d+\.\d+\.\d+\.\d+', extracted_text) 
 
-         # Especifica la ruta de Tesseract manualmente para no agregar el PATH como variable de entorno 
-         pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
-         
-         # Convertimos el contenido de la imagen a str 
-         extracted_text = pytesseract.image_to_string(image) 
-         
-         # Filtrar solo los números usando expresiones regulares // PARA CEDULAS VIEJAS 
-         numbers = re.findall(r'\d+', extracted_text) 
-         
-         # Extrae solo secuencias de dígitos 
-         # Usar una expresión regular para encontrar la línea que contiene "NUIP"// PARA CEDULAS NUEVAS  
-         match = re.search(r'NUIP \d+\.\d+\.\d+\.\d+', extracted_text) 
+            # Verificar si se encontró una coincidencia, True: cedula es nueva, False: cedula es vieja 
+            if match: 
+               nuip_line = match.group() 
+               nuip_digits = re.sub(r'\D', '', nuip_line) 
+               self.lb_doc.value = nuip_digits 
+               print(nuip_digits) 
+            else: 
+               text = ''.join(numbers) 
+               self.lb_doc.value = text 
+               print(text) 
 
-         # Verificar si se encontró una coincidencia, True: cedula es nueva, False: cedula es vieja 
-         if match: 
-            nuip_line = match.group() 
-            nuip_digits = re.sub(r'\D', '', nuip_line) 
-            self.lb_doc.value = nuip_digits 
-            print(nuip_digits) 
-         else: 
-            text = ''.join(numbers) 
-            self.lb_doc.value = text 
-            print(text) 
+            #!abro el hilo para que pueda iniciar uno nuevo   
+            self.threading_isrunning_txt = False
+      except Exception as e:
+         print(f"Error al optener el documento del estudiante: {e}")
+         self.threading_isrunning = True
 
-         #!abro el hilo para que pueda iniciar uno nuevo   
-         self.threading_isrunning_txt = False
    ...
 
    def fun_take_picture(self, e): #se puede capturar el doc por boton en vez de hacerlo frame-frame (más optimo para pc bajo recursos)
-      # Detenemos temporalmente la actualización de la cámara
-      self.threading_isrunning = False
+      try:
+         # Detenemos temporalmente la actualización de la cámara
+         self.threading_isrunning = False
 
-      # Capturamos el frame actual de la cámara
-      ret, frame = self.capture.read()
-      if ret:
-         # frame = cv2.flip(frame, 1)
-         # Convertimos el frame a base64
-         self.frame = frame
-         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-         _, buffer = cv2.imencode(".png", frame)
-         
-         frame_base64 = base64.b64encode(buffer).decode("utf-8")
-         photo = ft.Image(width=100, height=100, src_base64=frame_base64)
-         
-         # frame = self.frame
-         # cv2.imwrite("fotocc.png", frame) #guardar la foto, pruebas
-         # self.fun_toget_doc(frame)
+         # Capturamos el frame actual de la cámara
+         ret, frame = self.capture.read()
+         if ret:
+            # frame = cv2.flip(frame, 1)
+            # Convertimos el frame a base64
+            self.frame = frame
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            _, buffer = cv2.imencode(".png", frame)
+            
+            frame_base64 = base64.b64encode(buffer).decode("utf-8")
+            photo = ft.Image(width=100, height=100, src_base64=frame_base64)
+            
+            # frame = self.frame
+            # cv2.imwrite("fotocc.png", frame) #guardar la foto, pruebas
+            # self.fun_toget_doc(frame)
 
-         #inicia el hilo GET_DOC // si es por boton, esta función puede o no tratarse como hilo
-         self.threading_txt = threading.Thread(target= self.fun_toget_doc(frame)) #-->pc
-         self.threading_txt.start() 
-         
-         # Actualizamos la tarjeta con la nueva imagen capturada..> lo dejo por gusto, pero es necesario eliminarlo
-         self.card_doc_description.content.controls[0].content = photo
+            #inicia el hilo GET_DOC // si es por boton, esta función puede o no tratarse como hilo
+            self.threading_txt = threading.Thread(target= self.fun_toget_doc(frame)) #-->pc
+            self.threading_txt.start() 
+            
+            # Actualizamos la tarjeta con la nueva imagen capturada..> lo dejo por gusto, pero es necesario eliminarlo
+            self.card_doc_description.content.controls[0].content = photo
+            self.page.update()
+
+            # Reiniciamos la actualización de la cámara
+            self.threading_isrunning = True
+            self.threading = threading.Thread(target=self.fun_update_frame_camera)
+            self.threading.start()
+         else:
+            print("No se pudo capturar el frame de la cámara")
          self.page.update()
-
-         # Reiniciamos la actualización de la cámara
+      except Exception as e:
+         print(f"Error al tomar la foto: {e}")
          self.threading_isrunning = True
          self.threading = threading.Thread(target=self.fun_update_frame_camera)
          self.threading.start()
-      else:
-         print("No se pudo capturar el frame de la cámara")
-      self.page.update()
+         self.page.update()
+
    ...
 
    def fun_take_picture_ip(self, e):
@@ -218,7 +238,8 @@ class ScanDoc(ft.Container):
       #####NOTA: Si se va usar una camara ip, entonces descomentar las lineas que tienen (#-->ip) y comentar (#-->pc)
       
       ##          camara
-      self.capture = cv2.VideoCapture(0) #-->pc
+      # self.capture = cv2.VideoCapture(0) #-->pc
+      self.capture = None #-->pc
       # self.capture = cv2.VideoCapture(1) #--> cam usb-phone
       # self.capture = cv2.VideoCapture("http://192.168.101.87:3660/video") #-->ip
       ...
@@ -233,6 +254,7 @@ class ScanDoc(ft.Container):
 
       #           hilo leer frame para covertir a txt
       self.threading_isrunning_txt = False #controlador de hilo
+      
       self.threading_txt = threading.Thread(target= self.fun_toget_doc) #-->pc
       self.lock = threading.Lock()
       # self.threading_txt.start() #inicia el hilo dentro del fun_update_frame_camera
