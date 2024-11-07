@@ -27,18 +27,24 @@ class Login(ft.Container):
                   time.sleep(1.2)
                   self.app_main.nav_rail.content = self.app_main.nav_rail_user
                   self.app_main.cont_main.content = self.app_main.container_about.content
-                  print(self.app_main.nav_rail.content)
-                  # self.app_main.cont_main.content = ft.Text("Hello World")
-                  # self.app_main.cont_main.update()
-
+                  self.app_main.name_profile.value = name
+                  self.app_main.btn_login.text = "Log out"
                   print(usuario, name, typee)
+                  self.lb_usuario.value = ""
+                  self.lb_password.value = ""
+                  self.page.update()
                elif typee == "admin":
                   time.sleep(1.1)
                   self.app_main.nav_rail.content = self.app_main.nav_rail_admin
                   self.app_main.cont_main.content = self.app_main.container_about.content
+                  self.app_main.name_profile.value = name
+                  self.app_main.btn_login.text = "Log out"
                   print(usuario, name, typee)
+                  self.lb_usuario.value = ""
+                  self.lb_password.value = ""
+                  self.page.update()
                
-               self.app_main.nav_rail.update()
+               # self.app_main.nav_rail.update()
             except Exception as e:
                print(f"Error:::::::::::::::::: {e}")
          
@@ -54,7 +60,8 @@ class Login(ft.Container):
          time.sleep(2)
          self.txt_message.value = ""
          self.txt_message.update()
-      
+                  
+      # self.app_main.icon_profile.update()
       self.page.update()
 
    # ---------------------------------------- CONTROLES ----------------------------------------

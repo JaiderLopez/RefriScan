@@ -1,7 +1,7 @@
 import flet as ft
 
-import validaciones.valid_horario as valid #general, para correr la app.py
-# import valid_horario as valid #temporal, para pruebas del modulo
+# import validaciones.valid_horario as valid #general, para correr la app.py
+import valid_horario as valid #temporal, para pruebas del modulo
 
 import cv2 #captura de video
 import threading #gestion de hilos
@@ -193,6 +193,7 @@ class ScanDoc(ft.Container):
       ...
 
    def fun_validate_doc(self, e):
+      self.btn_reload.visible = True
       print(self.lb_doc.value)
       id = self.lb_doc.value
 
@@ -226,9 +227,26 @@ class ScanDoc(ft.Container):
       # print()
    ...
 
+   def fun_reload(self, e):
+      self.lb_doc.value = ""
+      self.card_doc_description.content.controls[0].content = self.icon_
+      self.card_doc_description.content.controls[0].shadow = ft.BoxShadow( #sombra del contenedor permitido-denegado
+                                                               spread_radius=1,
+                                                               blur_radius=15,
+                                                               color= ft.colors.BLUE_GREY_100,
+                                                               offset=ft.Offset(0, 0),
+                                                               blur_style=ft.ShadowBlurStyle.OUTER,
+                                                            )
+      self.btn_reload.visible = False
+      self.page.update()
+
    def fun_(self, e): #..> futuro
 
       ...
+
+
+
+
    # ---------------------------------------- CONTROLES ----------------------------------------
    def __init__(self, page: ft.Page):
       super().__init__()
@@ -238,8 +256,8 @@ class ScanDoc(ft.Container):
       #####NOTA: Si se va usar una camara ip, entonces descomentar las lineas que tienen (#-->ip) y comentar (#-->pc)
       
       ##          camara
-      # self.capture = cv2.VideoCapture(0) #-->pc
-      self.capture = None #-->pc
+      self.capture = cv2.VideoCapture(0) #-->pc
+      # self.capture = None #-->pc
       # self.capture = cv2.VideoCapture(1) #--> cam usb-phone
       # self.capture = cv2.VideoCapture("http://192.168.101.87:3660/video") #-->ip
       ...
@@ -276,6 +294,9 @@ class ScanDoc(ft.Container):
 
       ##          botones
       self.btn_validate = ft.ElevatedButton(text=" ",icon= ft.icons.SEND_OUTLINED, on_click=self.fun_validate_doc)
+      # self.btn_reload = ft.ElevatedButton(text=" ",icon= ft.icons.SEND_OUTLINED, on_click=self.fun_validate_doc)
+      self.btn_reload = ft.Container(visible=False, border= ft.border.all(1, color= 'black100',), bgcolor= "transparent", border_radius=10,
+                           content= ft.Icon(name= ft.icons.REPLAY_OUTLINED, color='black'), on_click=self.fun_reload,)
       self.btn_take_picture = ft.OutlinedButton(icon=ft.Icon("camera"), on_click=self.fun_take_picture) #-->pc
       # self.btn_take_picture = ft.OutlinedButton(icon=ft.Icon("camera"), on_click=self.fun_take_picture_ip) #-->ip
       ...
@@ -326,7 +347,7 @@ class ScanDoc(ft.Container):
                                   controls=[ft.Container(bgcolor= dict_colores["fondo"], padding=30,
                                                       content=ft.Column(horizontal_alignment= ft.CrossAxisAlignment.CENTER,
                                                       controls=[self.card_cam_view, 
-                                                                ft.Row(controls=[self.lb_doc, self.btn_validate], alignment='center'), 
+                                                                ft.Row(controls=[self.lb_doc, self.btn_validate, self.btn_reload], alignment='center'), 
                                                                 self.card_doc_description]))])
       ...
       

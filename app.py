@@ -4,6 +4,7 @@ from interfaces.class_scan import ScanDoc
 from interfaces.class_login import Login
 from interfaces.class_about import About_project
 import threading
+import time
 
 class AppMain(ft.Container):
    # ---------------------------------------- FUNCIONES ----------------------------------------
@@ -104,6 +105,15 @@ class AppMain(ft.Container):
          self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
       self.cont_main.update()
    ...
+
+   def fun_gologout(self, e):
+      self.name_profile.value = ""
+      if self.btn_login.text == "Log out":
+         self.btn_login.text = "Log in" 
+      self.cont_main.content = self.container_login.content
+      self.nav_rail.content = self.nav_rail_login
+      time.sleep(.5)
+      self.page.update()
    
    # ---------------------------------------- CONTROLES ----------------------------------------
    def __init__(self, page: ft.Page):
@@ -209,6 +219,15 @@ class AppMain(ft.Container):
       self.nav_rail = ft.Container(content= self.nav_rail_login)
       ...
 
+      ##nav_profile
+      self.name_profile = ft.Text(value="", color="#107800")
+      self.btn_login = ft.ElevatedButton(text="Log in", on_click=self.fun_gologout, icon=ft.cupertino_icons.PERSON_2_FILL, icon_color="#107800", bgcolor='transparet', color="#107800")
+      # self.btn_logout = ft.ElevatedButton(text="Log out", on_click=self.fun_gologout, icon=ft.cupertino_icons.PERSON_2_FILL, icon_color="#107800", bgcolor='transparet', color="#107800")
+      self.btn_log = self.btn_login
+      self.icon_profile = ft.Container(content= self.btn_log,)
+      self.nav_profile = ft.Row(alignment='end', height=30,
+                                controls=[self.name_profile, self.icon_profile])
+
       #           containers
       self.cont_main = ft.Container(
          expand=True,
@@ -225,7 +244,9 @@ class AppMain(ft.Container):
          vertical_alignment= ft.MainAxisAlignment.CENTER,
          auto_scroll=True,
          alignment=ft.MainAxisAlignment.START,
-         controls=[self.nav_rail, ft.VerticalDivider(1,), self.cont_main],
+         # controls=[self.nav_rail, ft.VerticalDivider(1,), self.cont_main],
+         controls=[self.nav_rail, ft.VerticalDivider(1,), ft.Column(expand=True,
+                                                                    controls=[self.nav_profile, self.cont_main])],
       )
 
    def build(self):
@@ -238,6 +259,7 @@ class AppMain(ft.Container):
       self.page.window.prevent_close = True
    # ---------------------------------------- GRAPHICS ----------------------------------------
       self.page.add(self.row_main)
+      # self.page.add(self.nav_profile)
    ...
 
 def main(page: ft.Page):
