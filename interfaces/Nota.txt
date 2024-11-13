@@ -1,2 +1,0 @@
-En esta Carpeta irán las interfaces del sistema
-Interfaz: presentación, scan, table, analitycs

@@ -1,1 +1,0 @@
-En esta Carpeta irán las funciones de validación de cada interfaz

@@ -3,118 +3,11 @@ from cv2 import VideoCapture
 from interfaces.class_scan import ScanDoc
 from interfaces.class_login import Login
 from interfaces.class_about import About_project
+from interfaces.class_table_estudent import TableEstudent
 import threading
 import time
 
 class AppMain(ft.Container):
-   # ---------------------------------------- FUNCIONES ----------------------------------------
-   def change_content_admin(self, e): #cambiar el contenido desde el nav-vertical
-      data = int(e.data)
-      if data == 0:
-         print(self.user)
-         print(self.user_name)
-         print(self.user_type)
-         self.cont_main.content = self.container_about.content
-         self.container_scan.threading = False
-         try:
-            self.container_scan.capture.release()
-         except Exception as e:
-            print(f"Error::::::::::::: {e}")
-
-      elif data == 1:
-         # self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
-         self.container_scan.capture = VideoCapture(0)
-         self.container_scan.threading_isrunning = True
-         self.container_scan.threading = threading.Thread(target=self.container_scan.fun_update_frame_camera)
-         self.container_scan.threading.start()
-         self.cont_main.content = self.container_scan.content
-      elif data == 2:
-         self.cont_main.content = ft.Text("Table Students Containt", size=30, color= ft.colors.RED_700)
-      elif data == 3:
-         self.cont_main.content = ft.Text("Analitycs Containt", size=30, color= ft.colors.RED_700)
-      elif data == 4:
-         self.container_scan.threading_isrunning = False
-         try:
-            self.container_scan.capture.release()
-            self.container_scan.threading_txt.join()
-         except Exception as e:
-            print(f"Error al unir hilos: {e}")
-         self.page.window.destroy()
-      else:
-         self.cont_main.alignment = ft.alignment.center
-         self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
-      self.cont_main.update()
-   ...
-
-   def change_content_user(self, e): #cambiar el contenido desde el nav-vertical
-      data = int(e.data)
-      if data == 0:
-         print(self.user)
-         print(self.user_name)
-         print(self.user_type)
-         self.cont_main.content = self.container_about.content
-         self.container_scan.threading = False
-         try:
-            self.container_scan.capture.release()
-         except Exception as e:
-            print(f"Error::::::::::::: {e}")
-
-      elif data == 1:
-         # self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
-         self.container_scan.capture = VideoCapture(0)
-         self.container_scan.threading_isrunning = True
-         self.container_scan.threading = threading.Thread(target=self.container_scan.fun_update_frame_camera)
-         self.container_scan.threading.start()
-         self.cont_main.content = self.container_scan.content
-      elif data == 2:
-         self.container_scan.threading_isrunning = False
-         try:
-            self.container_scan.capture.release()
-            self.container_scan.threading_txt.join()
-         except Exception as e:
-            print(f"Error al unir hilos: {e}")
-         self.page.window.destroy()
-      else:
-         self.cont_main.alignment = ft.alignment.center
-         self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
-      self.cont_main.update()
-   ...
-
-   def change_content_login(self, e): #cambiar el contenido desde el nav-vertical
-      data = int(e.data)
-      if data == 0:
-         print(self.user)
-         print(self.user_name)
-         print(self.user_type)
-         self.cont_main.content = self.container_about.content
-         self.container_scan.threading = False
-         try:
-            self.container_scan.capture.release()
-         except Exception as e:
-            print(f"Error::::::::::::: {e}")
-      elif data == 1:
-         self.container_scan.threading_isrunning = False
-         try:
-            self.container_scan.capture.release()
-            self.container_scan.threading_txt.join()
-         except Exception as e:
-            print(f"Error al unir hilos: {e}")
-         self.page.window.destroy()
-      else:
-         self.cont_main.alignment = ft.alignment.center
-         self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
-      self.cont_main.update()
-   ...
-
-   def fun_gologout(self, e):
-      self.name_profile.value = ""
-      if self.btn_login.text == "Log out":
-         self.btn_login.text = "Log in" 
-      self.cont_main.content = self.container_login.content
-      self.nav_rail.content = self.nav_rail_login
-      time.sleep(.5)
-      self.page.update()
-   
    # ---------------------------------------- CONTROLES ----------------------------------------
    def __init__(self, page: ft.Page):
       super().__init__()
@@ -125,7 +18,8 @@ class AppMain(ft.Container):
       self.user_name = None
       self.user_type = None
       self.container_login = Login(self, self.page,)
-      self.container_about = About_project(page)
+      self.container_about = About_project(self.page)
+      self.container_table = TableEstudent(self.page)
       ...
       #           nav_rail
       ## nav_user
@@ -248,6 +142,131 @@ class AppMain(ft.Container):
          controls=[self.nav_rail, ft.VerticalDivider(1,), ft.Column(expand=True,
                                                                     controls=[self.nav_profile, self.cont_main])],
       )
+
+
+   # ---------------------------------------- FUNCIONES ----------------------------------------
+   def change_content_admin(self, e): #cambiar el contenido desde el nav-vertical
+      data = int(e.data)
+      if data == 0: #about
+         self.cont_main.content = self.container_about.content
+         self.container_scan.threading = False
+         try:
+            self.container_scan.capture.release()
+         except Exception as e:
+            print(f"Error::::::::::::: {e}")
+
+      elif data == 1: #scan
+         # self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
+         self.container_scan.capture = VideoCapture(0)
+         self.container_scan.threading_isrunning = True
+         self.container_scan.threading = threading.Thread(target=self.container_scan.fun_update_frame_camera)
+         self.container_scan.threading.start()
+         self.cont_main.content = self.container_scan.content
+
+      elif data == 2: #table
+         # self.cont_main.content = ft.Text("Table Students Containt", size=30, color= ft.colors.RED_700)
+         self.cont_main.content = self.container_table.content
+         self.container_scan.threading = False
+         try:
+            self.container_scan.capture.release()
+         except Exception as e:
+            print(f"Error::::::::::::: {e}")
+
+      elif data == 3: #analitycs
+         self.cont_main.content = ft.Text("Analitycs Containt", size=30, color= ft.colors.RED_700)
+         self.container_scan.threading = False
+         try:
+            self.container_scan.capture.release()
+         except Exception as e:
+            print(f"Error::::::::::::: {e}")
+
+      elif data == 4: #salir
+         self.container_scan.threading_isrunning = False
+         try:
+            self.container_scan.capture.release()
+            self.container_scan.threading_txt.join()
+         except Exception as e:
+            print(f"Error al unir hilos: {e}")
+         self.page.window.destroy()
+      else:
+         self.cont_main.alignment = ft.alignment.center
+         self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
+      self.cont_main.update()
+   ...
+
+   def change_content_user(self, e): #cambiar el contenido desde el nav-vertical
+      data = int(e.data)
+      if data == 0:
+         print(self.user)
+         print(self.user_name)
+         print(self.user_type)
+         self.cont_main.content = self.container_about.content
+         self.container_scan.threading = False
+         try:
+            self.container_scan.capture.release()
+         except Exception as e:
+            print(f"Error::::::::::::: {e}")
+
+      elif data == 1:
+         # self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
+         self.container_scan.capture = VideoCapture(0)
+         self.container_scan.threading_isrunning = True
+         self.container_scan.threading = threading.Thread(target=self.container_scan.fun_update_frame_camera)
+         self.container_scan.threading.start()
+         self.cont_main.content = self.container_scan.content
+      elif data == 2:
+         self.container_scan.threading_isrunning = False
+         try:
+            self.container_scan.capture.release()
+            self.container_scan.threading_txt.join()
+         except Exception as e:
+            print(f"Error al unir hilos: {e}")
+         self.page.window.destroy()
+      else:
+         self.cont_main.alignment = ft.alignment.center
+         self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
+      self.cont_main.update()
+   ...
+
+   def change_content_login(self, e): #cambiar el contenido desde el nav-vertical
+      data = int(e.data)
+      if data == 0:
+         print(self.user)
+         print(self.user_name)
+         print(self.user_type)
+         self.cont_main.content = self.container_about.content
+         self.container_scan.threading = False
+         try:
+            self.container_scan.capture.release()
+         except Exception as e:
+            print(f"Error::::::::::::: {e}")
+      elif data == 1:
+         self.container_scan.threading_isrunning = False
+         try:
+            self.container_scan.capture.release()
+            self.container_scan.threading_txt.join()
+         except Exception as e:
+            print(f"Error al unir hilos: {e}")
+         self.page.window.destroy()
+      else:
+         self.cont_main.alignment = ft.alignment.center
+         self.cont_main.content = ft.Text("Proximamente ...", size=30, color=ft.colors.ORANGE)
+      self.cont_main.update()
+   ...
+
+   def fun_gologout(self, e):
+      self.name_profile.value = ""
+      if self.btn_login.text == "Log out":
+         self.btn_login.text = "Log in" 
+      self.cont_main.content = self.container_login.content
+      self.nav_rail.content = self.nav_rail_login
+      self.container_scan.threading = False
+      try:
+         self.container_scan.capture.release()
+      except Exception as e:
+         print(f"Error::::::::::::: {e}")
+      time.sleep(.5)
+      self.page.update()
 
    def build(self):
    #           controles generales

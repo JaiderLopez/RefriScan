@@ -1,7 +1,7 @@
 import flet as ft
 
-# import validaciones.valid_horario as valid #general, para correr la app.py
-import valid_horario as valid #temporal, para pruebas del modulo
+import validaciones.valid_horario as valid #general, para correr la app.py
+# import valid_horario as valid #temporal, para pruebas del modulo
 
 import cv2 #captura de video
 import threading #gestion de hilos
@@ -30,6 +30,116 @@ with open(r"bd\\horario_estudiantes.json", 'r') as file:
 
 
 class ScanDoc(ft.Container):
+      # ---------------------------------------- CONTROLES ----------------------------------------
+   def __init__(self, page: ft.Page):
+      super().__init__()
+      self.page = page
+      self.data_ = data_.copy()
+
+      #####NOTA: Si se va usar una camara ip, entonces descomentar las lineas que tienen (#-->ip) y comentar (#-->pc)
+      
+      ##          camara
+      # self.capture = cv2.VideoCapture(0) #-->pc
+      self.capture = None #-->pc
+      # self.capture = cv2.VideoCapture(1) #--> cam usb-phone
+      # self.capture = cv2.VideoCapture("http://192.168.101.87:3660/video") #-->ip
+      ...
+      self.frame = None #frame qué se analizará para extraer el doc del estudiante
+      
+      #           hilo actualizar frame de camara
+      self.threading_isrunning = True #controlador de hilo
+      self.threading = threading.Thread(target= self.fun_update_frame_camera) #-->pc
+      # self.threading = threading.Thread(target= self.fun_update_frame_camera_ip) #-->ip
+      self.threading.start() #inicia el hilo
+      ...
+
+      #           hilo leer frame para covertir a txt
+      self.threading_isrunning_txt = False #controlador de hilo
+      
+      self.threading_txt = threading.Thread(target= self.fun_toget_doc) #-->pc
+      self.lock = threading.Lock()
+      # self.threading_txt.start() #inicia el hilo dentro del fun_update_frame_camera
+      ...
+
+      #imagen qué se actualiza como camara en la interfaz, inicia con una opcional en caso de no encontrar la camara
+      self.camera_img = ft.Image(width=345, height=245, src_base64=base64.b64encode(open(r"imgs\image_not_found.jpg", 'rb').read()).decode("utf-8"))
+      ...
+
+      ##          logotipo intitucional
+      self.logo_path = r"imgs\escudo_institucional.png"
+      self.logo = ft.Image(src=self.logo_path, height=150)
+      ...
+
+      ##          labels
+      self.lb_doc = ft.TextField(value="" ,width= 200, bgcolor= dict_colores["blanco"], color= 'black', text_align= 'center',
+                                 border= ft.border.all(2, color='green900',), border_radius=10, hint_text="Doc:")
+      ...
+
+      ##          botones
+      self.btn_validate = ft.ElevatedButton(text=" ",icon= ft.icons.SEND_OUTLINED, on_click=self.fun_validate_doc)
+      # self.btn_reload = ft.ElevatedButton(text=" ",icon= ft.icons.SEND_OUTLINED, on_click=self.fun_validate_doc)
+      self.btn_reload = ft.Container(visible=False, border= ft.border.all(1, color= 'black100',), bgcolor= "transparent", border_radius=10,
+                           content= ft.Icon(name= ft.icons.REPLAY_OUTLINED, color='black'), on_click=self.fun_reload,)
+      self.btn_take_picture = ft.OutlinedButton(icon=ft.Icon("camera"), on_click=self.fun_take_picture) #-->pc
+      # self.btn_take_picture = ft.OutlinedButton(icon=ft.Icon("camera"), on_click=self.fun_take_picture_ip) #-->ip
+      ...
+
+      ##          cards
+      #card de frame - camara
+      self.card_cam_view = ft.Card(width= 350, height=300,
+                                   content= ft.Row(alignment="center", expand=True,
+                                             controls=[ft.Column(expand=True, horizontal_alignment="center",
+                                                   controls=[self.camera_img, self.btn_take_picture])]))
+      
+      #card de validación (ALLOW OR DENEGATED)
+      ## iconoes
+      self.icon_ = ft.Image(src=r"imgs\load.png", )
+      self.icon_allow = ft.Image(src=r"imgs\aprobado.png", )
+      self.icon_denegated = ft.Image(src=r"imgs\denegado.png", )
+      ## text
+      self.txt_doc_esstudiant = ft.Text(value="Doc: ", size=22, color= ft.colors.WHITE)
+      self.txt_faltas = ft.Text(value="Numero Faltas: ", size=13, color= ft.colors.WHITE)
+      self.txt_faltas_rest = ft.Text(value="Faltas Restantes para Bloquear: ", size=12, color= ft.colors.WHITE)
+      ## card
+      self.card_doc_description = ft.Card(
+         width=420, height=180,
+         content=ft.Row(expand=True, alignment="center", vertical_alignment="center",
+               controls=[
+                  ft.Container(width=100, height=100, bgcolor=ft.colors.TRANSPARENT, border_radius=50,
+                  content= self.icon_, shadow=ft.BoxShadow(
+                                                                  spread_radius=1,
+                                                                  blur_radius=10,
+                                                                  color=ft.colors.BLUE_GREY_100,
+                                                                  offset=ft.Offset(0, 0),
+                                                                  blur_style=ft.ShadowBlurStyle.OUTER,
+                                                               )),
+                  ft.VerticalDivider(width=1, color=ft.colors.TRANSPARENT),
+                  ft.Container(width=270, height=150, bgcolor= ft.colors.BLACK26, border_radius=20, padding=5,
+                               content= ft.Column(expand=True,
+                                                  controls=[self.txt_doc_esstudiant,
+                                                            self.txt_faltas, self.txt_faltas_rest]))
+               ]
+         )
+      )
+      ...
+
+      ##          rows
+      self.row_logo = ft.Row(alignment='center', height= 150,
+                             controls=[self.logo])
+      self.row_container = ft.Row(alignment='center', 
+                                  controls=[ft.Container(bgcolor= dict_colores["blanco"], padding=15,
+                                                      content=ft.Column(horizontal_alignment= ft.CrossAxisAlignment.CENTER,
+                                                      controls=[self.card_cam_view, 
+                                                                ft.Row(controls=[self.lb_doc, self.btn_validate, self.btn_reload], alignment='center'), 
+                                                                self.card_doc_description]))])
+      ...
+      
+      #Lo que exporta esta clase para la app-main
+      self.content = ft.Container(expand=True,
+                                  content= ft.Column(expand=True, horizontal_alignment= ft.CrossAxisAlignment.CENTER,
+                                                     controls=[self.row_logo, self.row_container]))
+   ...
+   
    # ---------------------------------------- FUNCIONES ----------------------------------------
    def fun_update_frame_camera_ip(self):
       while self.threading_isrunning:
@@ -70,8 +180,8 @@ class ScanDoc(ft.Container):
                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
                #las siguientes 2 lineas gestionan la lectura sin tener que press boton de captura
-               # self.threading_txt = threading.Thread(target= self.fun_toget_doc(frame)) #-->pc
-               # self.threading_txt.start() #inicia el hilo
+               self.threading_txt = threading.Thread(target= self.fun_toget_doc(frame)) #-->pc
+               self.threading_txt.start() #inicia el hilo
                
                frame = cv2.flip(frame, 1) #invierte frame, para que se vea derecho si usa la camara selfie
                _, buffer = cv2.imencode('.png', frame)
@@ -247,114 +357,6 @@ class ScanDoc(ft.Container):
 
 
 
-   # ---------------------------------------- CONTROLES ----------------------------------------
-   def __init__(self, page: ft.Page):
-      super().__init__()
-      self.page = page
-      self.data_ = data_.copy()
-
-      #####NOTA: Si se va usar una camara ip, entonces descomentar las lineas que tienen (#-->ip) y comentar (#-->pc)
-      
-      ##          camara
-      self.capture = cv2.VideoCapture(0) #-->pc
-      # self.capture = None #-->pc
-      # self.capture = cv2.VideoCapture(1) #--> cam usb-phone
-      # self.capture = cv2.VideoCapture("http://192.168.101.87:3660/video") #-->ip
-      ...
-      self.frame = None #frame qué se analizará para extraer el doc del estudiante
-      
-      #           hilo actualizar frame de camara
-      self.threading_isrunning = True #controlador de hilo
-      self.threading = threading.Thread(target= self.fun_update_frame_camera) #-->pc
-      # self.threading = threading.Thread(target= self.fun_update_frame_camera_ip) #-->ip
-      self.threading.start() #inicia el hilo
-      ...
-
-      #           hilo leer frame para covertir a txt
-      self.threading_isrunning_txt = False #controlador de hilo
-      
-      self.threading_txt = threading.Thread(target= self.fun_toget_doc) #-->pc
-      self.lock = threading.Lock()
-      # self.threading_txt.start() #inicia el hilo dentro del fun_update_frame_camera
-      ...
-
-      #imagen qué se actualiza como camara en la interfaz, inicia con una opcional en caso de no encontrar la camara
-      self.camera_img = ft.Image(width=345, height=245, src_base64=base64.b64encode(open(r"imgs\image_not_found.jpg", 'rb').read()).decode("utf-8"))
-      ...
-
-      ##          logotipo intitucional
-      self.logo_path = r"imgs\escudo_institucional.png"
-      self.logo = ft.Image(src=self.logo_path, height=150)
-      ...
-
-      ##          labels
-      self.lb_doc = ft.TextField(value="" ,width= 200, bgcolor= dict_colores["blanco"], color= 'black', text_align= 'center',
-                                 border= ft.border.all(2, color='green900',), border_radius=10, hint_text="Doc:")
-      ...
-
-      ##          botones
-      self.btn_validate = ft.ElevatedButton(text=" ",icon= ft.icons.SEND_OUTLINED, on_click=self.fun_validate_doc)
-      # self.btn_reload = ft.ElevatedButton(text=" ",icon= ft.icons.SEND_OUTLINED, on_click=self.fun_validate_doc)
-      self.btn_reload = ft.Container(visible=False, border= ft.border.all(1, color= 'black100',), bgcolor= "transparent", border_radius=10,
-                           content= ft.Icon(name= ft.icons.REPLAY_OUTLINED, color='black'), on_click=self.fun_reload,)
-      self.btn_take_picture = ft.OutlinedButton(icon=ft.Icon("camera"), on_click=self.fun_take_picture) #-->pc
-      # self.btn_take_picture = ft.OutlinedButton(icon=ft.Icon("camera"), on_click=self.fun_take_picture_ip) #-->ip
-      ...
-
-      ##          cards
-      #card de frame - camara
-      self.card_cam_view = ft.Card(width= 350, height=300,
-                                   content= ft.Row(alignment="center", expand=True,
-                                             controls=[ft.Column(expand=True, horizontal_alignment="center",
-                                                   controls=[self.camera_img, self.btn_take_picture])]))
-      
-      #card de validación (ALLOW OR DENEGATED)
-      ## iconoes
-      self.icon_ = ft.Image(src=r"imgs\load.png", )
-      self.icon_allow = ft.Image(src=r"imgs\aprobado.png", )
-      self.icon_denegated = ft.Image(src=r"imgs\denegado.png", )
-      ## text
-      self.txt_doc_esstudiant = ft.Text(value="Doc: ", size=22, color= ft.colors.WHITE)
-      self.txt_faltas = ft.Text(value="Numero Faltas: ", size=13, color= ft.colors.WHITE)
-      self.txt_faltas_rest = ft.Text(value="Faltas Restantes para Bloquear: ", size=12, color= ft.colors.WHITE)
-      ## card
-      self.card_doc_description = ft.Card(
-         width=420, height=180,
-         content=ft.Row(expand=True, alignment="center", vertical_alignment="center",
-               controls=[
-                  ft.Container(width=100, height=100, bgcolor=ft.colors.TRANSPARENT, border_radius=50,
-                  content= self.icon_, shadow=ft.BoxShadow(
-                                                                  spread_radius=1,
-                                                                  blur_radius=10,
-                                                                  color=ft.colors.BLUE_GREY_100,
-                                                                  offset=ft.Offset(0, 0),
-                                                                  blur_style=ft.ShadowBlurStyle.OUTER,
-                                                               )),
-                  ft.VerticalDivider(width=1, color=ft.colors.TRANSPARENT),
-                  ft.Container(width=270, height=150, bgcolor= ft.colors.BLACK26, border_radius=20, padding=5,
-                               content= ft.Column(expand=True,
-                                                  controls=[self.txt_doc_esstudiant,
-                                                            self.txt_faltas, self.txt_faltas_rest]))
-               ]
-         )
-      )
-      ...
-
-      ##          rows
-      self.row_logo = ft.Row(alignment='center', height= 150,
-                             controls=[self.logo])
-      self.row_container = ft.Row(alignment='center', 
-                                  controls=[ft.Container(bgcolor= dict_colores["fondo"], padding=30,
-                                                      content=ft.Column(horizontal_alignment= ft.CrossAxisAlignment.CENTER,
-                                                      controls=[self.card_cam_view, 
-                                                                ft.Row(controls=[self.lb_doc, self.btn_validate, self.btn_reload], alignment='center'), 
-                                                                self.card_doc_description]))])
-      ...
-      
-      #Lo que exporta esta clase para la app-main
-      self.content = ft.Container(expand=True,
-                                  content= ft.Column(expand=True, horizontal_alignment= ft.CrossAxisAlignment.CENTER,
-                                                     controls=[self.row_logo, self.row_container]))
 
 def main(page: ft.Page):
    app = ScanDoc(page)
