@@ -3,8 +3,10 @@ import base64
 import json
 import time
 
-with open(r"bd\credenciales.json", 'r') as file:
-   credenciales = json.load(file)
+def data_get():
+   with open("bd\\credenciales.json", 'r') as file:
+      credenciales = json.load(file)
+   return credenciales
 
 class Login(ft.Container):
    # ---------------------------------------- CONTROLES ----------------------------------------
@@ -12,6 +14,7 @@ class Login(ft.Container):
       super().__init__()
       self.page = page
       self.app_main = app_main
+      self.credenciales = data_get()
       #           logo
       self.path_log = base64.b64encode(open(r"imgs\escudo_institucional.png", 'rb').read()).decode("utf-8")
       self.logo_poli = ft.Image(src_base64=self.path_log, height= 300)
@@ -48,13 +51,13 @@ class Login(ft.Container):
       print("validando...")
       usuario = self.lb_usuario.value
       contraseña = self.lb_password.value
-      if usuario in credenciales:
-         if credenciales[usuario]['password'] == contraseña:
+      if usuario in self.credenciales:
+         if self.credenciales[usuario]['password'] == contraseña:
             # self.page.clean()
             # self.page.add(ft.Text(f"Welcome: {usuario}"))
-            # print(credenciales[usuario]["type"])
-            name = credenciales[usuario]["name"]
-            typee = credenciales[usuario]["type"]
+            # print(self.credenciales[usuario]["type"])
+            name = self.credenciales[usuario]["name"]
+            typee = self.credenciales[usuario]["type"]
             try:
                self.app_main.user = usuario
                self.app_main.user_name = name

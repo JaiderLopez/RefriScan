@@ -4,6 +4,7 @@ from interfaces.class_scan import ScanDoc
 from interfaces.class_login import Login
 from interfaces.class_about import About_project
 from interfaces.class_table_estudent import TableEstudent
+from interfaces.class_config_credencial import UserManagerApp, data_get
 import threading
 import time
 
@@ -20,6 +21,7 @@ class AppMain(ft.Container):
       self.container_login = Login(self, self.page,)
       self.container_about = About_project(self.page)
       self.container_table = TableEstudent(self.page)
+      self.container_config = UserManagerApp(self.page)
       ...
       #           nav_rail
       ## nav_user
@@ -77,6 +79,11 @@ class AppMain(ft.Container):
                   selected_icon= ft.icons.TABLE_CHART,
                   label="Analitycs",
                   # disabled= True,
+               ),
+               ft.NavigationRailDestination(
+                  icon= ft.cupertino_icons.GEAR_ALT,
+                  selected_icon= ft.cupertino_icons.GEAR_ALT_FILL,
+                  label= "Configuración",
                ),
                ft.NavigationRailDestination(
                   # icon= ft.icons.OUTBOX,
@@ -149,7 +156,7 @@ class AppMain(ft.Container):
       data = int(e.data)
       if data == 0: #about
          self.cont_main.content = self.container_about.content
-         self.container_scan.threading = False
+         self.container_scan.threading_isrunning = False
          try:
             self.container_scan.capture.release()
          except Exception as e:
@@ -166,7 +173,7 @@ class AppMain(ft.Container):
       elif data == 2: #table
          # self.cont_main.content = ft.Text("Table Students Containt", size=30, color= ft.colors.RED_700)
          self.cont_main.content = self.container_table.content
-         self.container_scan.threading = False
+         self.container_scan.threading_isrunning = False
          try:
             self.container_scan.capture.release()
          except Exception as e:
@@ -174,13 +181,21 @@ class AppMain(ft.Container):
 
       elif data == 3: #analitycs
          self.cont_main.content = ft.Text("Analitycs Containt", size=30, color= ft.colors.RED_700)
-         self.container_scan.threading = False
+         self.container_scan.threading_isrunning = False
          try:
             self.container_scan.capture.release()
          except Exception as e:
             print(f"Error::::::::::::: {e}")
 
-      elif data == 4: #salir
+      elif data == 4: #credenciales
+         self.container_scan.threading_isrunning = False
+         self.cont_main.content = self.container_config.content
+         try:
+            self.container_scan.capture.release()
+         except Exception as e:
+            print(f"Error::::::::::::: {e}")
+
+      elif data == 5: #salir
          self.container_scan.threading_isrunning = False
          try:
             self.container_scan.capture.release()
@@ -201,7 +216,7 @@ class AppMain(ft.Container):
          print(self.user_name)
          print(self.user_type)
          self.cont_main.content = self.container_about.content
-         self.container_scan.threading = False
+         self.container_scan.threading_isrunning = False
          try:
             self.container_scan.capture.release()
          except Exception as e:
@@ -256,6 +271,7 @@ class AppMain(ft.Container):
 
    def fun_gologout(self, e):
       self.name_profile.value = ""
+      self.container_login.credenciales = data_get()
       if self.btn_login.text == "Log out":
          self.btn_login.text = "Log in" 
       self.cont_main.content = self.container_login.content

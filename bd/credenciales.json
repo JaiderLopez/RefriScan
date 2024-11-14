@@ -11,16 +11,14 @@
         "name": "Santiago Perez",
         "is_activate": true
     },
-    "1": { 
+    "1": {
         "password": "1",
         "type": "admin",
-        "name": "John Doe",
-        "is_activate": true
+        "name": "John Doe"
     },
     "2": {
         "password": "2",
         "type": "user",
-        "name": "Lisa Doe",
-        "is_activate": true
+        "name": "Lisa Does"
     }
 }
