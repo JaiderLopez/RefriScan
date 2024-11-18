@@ -33,18 +33,17 @@ class AppMain(ft.Container):
          group_alignment= -1,
          destinations=[
                ft.NavigationRailDestination(
-                  icon= ft.icons.CARD_TRAVEL_OUTLINED,
-                  selected_icon= ft.icons.CARD_TRAVEL_ROUNDED,
+                  icon_content= ft.Icon(name= ft.icons.CARD_TRAVEL_OUTLINED, color= "#2e7d32"),
+                  selected_icon_content= ft.Icon(name= ft.icons.CARD_TRAVEL_ROUNDED, color= "#2e7d32"),
                   label="Data Project",
                ),
                ft.NavigationRailDestination(
-                  icon= ft.icons.DOCUMENT_SCANNER_OUTLINED,
-                  selected_icon= ft.icons.DOCUMENT_SCANNER,
+                  icon_content= ft.Icon(name= ft.icons.DOCUMENT_SCANNER_OUTLINED, color= "#2e7d32"),
+                  selected_icon_content= ft.Icon(name= ft.icons.DOCUMENT_SCANNER, color= "#2e7d32"),
                   label="Scan",
                ),
                ft.NavigationRailDestination(
                   icon_content= ft.Icon(name= ft.icons.OUTBOX, color='red'),
-                  # selected_icon= ft.icons.OUTBOX_OUTLINED,
                   label="Salir",
                ),
          ],
@@ -59,36 +58,34 @@ class AppMain(ft.Container):
          group_alignment= -1,
          destinations=[
                ft.NavigationRailDestination(
-                  icon= ft.icons.CARD_TRAVEL_OUTLINED,
-                  selected_icon= ft.icons.CARD_TRAVEL_ROUNDED,
+                  icon_content= ft.Icon(name= ft.icons.CARD_TRAVEL_OUTLINED, color= "#2e7d32"),
+                  selected_icon_content= ft.Icon(name= ft.icons.CARD_TRAVEL_ROUNDED, color= "#2e7d32"),
                   label="Data Project",
                ),
                ft.NavigationRailDestination(
-                  icon= ft.icons.DOCUMENT_SCANNER_OUTLINED,
-                  selected_icon= ft.icons.DOCUMENT_SCANNER,
+                  icon_content= ft.Icon(name= ft.icons.DOCUMENT_SCANNER_OUTLINED, color= "#2e7d32"),
+                  selected_icon_content= ft.Icon(name= ft.icons.DOCUMENT_SCANNER, color= "#2e7d32"),
                   label="Scan",
                ),
                ft.NavigationRailDestination(
-                  icon= ft.icons.TABLE_ROWS_OUTLINED,
-                  selected_icon= ft.icons.TABLE_ROWS,
+                  icon_content= ft.Icon(name= ft.icons.TABLE_ROWS_OUTLINED, color= "#2e7d32"),
+                  selected_icon_content= ft.Icon(name= ft.icons.TABLE_ROWS, color= "#2e7d32"),
                   label="Data Students",
                   # disabled= True,
                ),
                ft.NavigationRailDestination(
-                  icon= ft.icons.TABLE_CHART_OUTLINED,
-                  selected_icon= ft.icons.TABLE_CHART,
+                  icon_content= ft.Icon(name= ft.icons.TABLE_CHART_OUTLINED, color= "#2e7d32"),
+                  selected_icon_content= ft.Icon(name= ft.icons.TABLE_CHART, color= "#2e7d32"),
                   label="Analitycs",
                   # disabled= True,
                ),
                ft.NavigationRailDestination(
-                  icon= ft.cupertino_icons.GEAR_ALT,
-                  selected_icon= ft.cupertino_icons.GEAR_ALT_FILL,
+                  icon_content= ft.Icon(name= ft.cupertino_icons.GEAR_ALT, color= "#2e7d32"),
+                  selected_icon_content= ft.Icon(name= ft.cupertino_icons.GEAR_ALT_FILL, color= "#2e7d32"),
                   label= "Configuración",
                ),
                ft.NavigationRailDestination(
-                  # icon= ft.icons.OUTBOX,
                   icon_content= ft.Icon(name= ft.icons.OUTBOX, color='red'),
-                  # selected_icon= ft.icons.OUTBOX_OUTLINED,
                   label="Salir",
                ),
          ],
@@ -96,15 +93,17 @@ class AppMain(ft.Container):
       )
       ## login
       self.nav_rail_login = ft.NavigationRail(
-         selected_index= 0,
+         selected_index= None,
          label_type= ft.NavigationRailLabelType.ALL,
          min_width= 100,
          min_extended_width= 115,
          group_alignment= -1,
          destinations=[
                ft.NavigationRailDestination(
-                  icon= ft.icons.CARD_TRAVEL_OUTLINED,
-                  selected_icon= ft.icons.CARD_TRAVEL_ROUNDED,
+                  # icon= ft.icons.CARD_TRAVEL_OUTLINED,
+                  icon_content= ft.Icon(name= ft.icons.CARD_TRAVEL_OUTLINED, color= "#2e7d32"),
+                  # selected_icon= ft.icons.CARD_TRAVEL_ROUNDED,
+                  selected_icon_content= ft.Icon(name= ft.icons.CARD_TRAVEL_ROUNDED, color= "#2e7d32"),
                   label="Data Project",
                ),
                ft.NavigationRailDestination(
@@ -152,18 +151,26 @@ class AppMain(ft.Container):
 
 
    # ---------------------------------------- FUNCIONES ----------------------------------------
+   def reload_inputs(self, dato):
+      if dato == 2:
+         self.container_table.reload()
+      if dato == 4:
+         self.container_config.reload_inputs()
+         self.container_config.hint_imputs()
+
+
    def change_content_admin(self, e): #cambiar el contenido desde el nav-vertical
       data = int(e.data)
       if data == 0: #about
          self.cont_main.content = self.container_about.content
          self.container_scan.threading_isrunning = False
+         # self.reload_inputs()
          try:
             self.container_scan.capture.release()
          except Exception as e:
             print(f"Error::::::::::::: {e}")
 
       elif data == 1: #scan
-         # self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
          self.container_scan.capture = VideoCapture(0)
          self.container_scan.threading_isrunning = True
          self.container_scan.threading = threading.Thread(target=self.container_scan.fun_update_frame_camera)
@@ -171,7 +178,7 @@ class AppMain(ft.Container):
          self.cont_main.content = self.container_scan.content
 
       elif data == 2: #table
-         # self.cont_main.content = ft.Text("Table Students Containt", size=30, color= ft.colors.RED_700)
+         self.reload_inputs(data)
          self.cont_main.content = self.container_table.content
          self.container_scan.threading_isrunning = False
          try:
@@ -189,6 +196,7 @@ class AppMain(ft.Container):
 
       elif data == 4: #credenciales
          self.container_scan.threading_isrunning = False
+         self.reload_inputs(data)
          self.cont_main.content = self.container_config.content
          try:
             self.container_scan.capture.release()
@@ -275,6 +283,9 @@ class AppMain(ft.Container):
       if self.btn_login.text == "Log out":
          self.btn_login.text = "Log in" 
       self.cont_main.content = self.container_login.content
+      self.nav_rail_admin.selected_index = 0
+      self.nav_rail_user.selected_index = 0
+      self.nav_rail_login.selected_index = None
       self.nav_rail.content = self.nav_rail_login
       self.container_scan.threading = False
       try:
@@ -287,10 +298,12 @@ class AppMain(ft.Container):
    def build(self):
    #           controles generales
       self.page.title = "APP - REFRISCAN"
-      self.page.window.min_width = 1040
+      self.page.window.min_width = 1100
       self.page.window.min_height = 800
-      self.page.window.width = 1050
+      self.page.window.width = 1200
       self.page.window.height = 810
+      self.page.window.max_width = 1250
+      self.page.window.max_height = 810
       self.page.window.prevent_close = True
    # ---------------------------------------- GRAPHICS ----------------------------------------
       self.page.add(self.row_main)

@@ -14,6 +14,12 @@ class Login(ft.Container):
       super().__init__()
       self.page = page
       self.app_main = app_main
+      self.page.fonts = {
+         'Roboto400': 'https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Roboto&display=swap',
+         'Roboto500': 'https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Roboto:ital,wght@1,500&display=swap'
+
+      }
+      self.page.theme = ft.Theme(font_family= 'Roboto500')
       self.credenciales = data_get()
       #           logo
       self.path_log = base64.b64encode(open(r"imgs\escudo_institucional.png", 'rb').read()).decode("utf-8")
@@ -40,9 +46,9 @@ class Login(ft.Container):
                                        self.btn_login])
       )
 
-      self.content = ft.Container(padding= ft.padding.only(top= 50),
-                                  content=ft.Column(expand= True, horizontal_alignment= ft.CrossAxisAlignment.CENTER, 
-                                          controls=[ft.Text("Login - RefriScan", size=37, weight='w900', font_family="Consolas"), 
+      self.content = ft.Container(padding= ft.padding.only(top= 10),
+                                  content=ft.Column(expand= True, horizontal_alignment= ft.CrossAxisAlignment.CENTER, spacing= 5,
+                                          controls=[ft.Text("Login to RefriScan", size=30, weight='w900', font_family= 'san-serif', color= 'black', italic= True), 
                                                    self.container],
                                           ))
    ...
