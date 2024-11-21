@@ -52,4 +52,4 @@ def validarEntrega(doc: str, hora: int):
 
 if __name__ == '__main__':
     # print(validarEntrega('1001022313'))
-    print(validarEntrega('1001152975', 19))
+    print(validarEntrega('1001152975'))
