@@ -152,6 +152,8 @@ class AppMain(ft.Container):
 
    # ---------------------------------------- FUNCIONES ----------------------------------------
    def reload_inputs(self, dato):
+      if dato == 1:
+         self.container_scan.reload_data_scanner()
       if dato == 2:
          self.container_table.reload()
       if dato == 4:
@@ -161,7 +163,7 @@ class AppMain(ft.Container):
 
    def change_content_admin(self, e): #cambiar el contenido desde el nav-vertical
       data = int(e.data)
-      if data == 0: #about
+      if data == 0: #about project
          self.cont_main.content = self.container_about.content
          self.container_scan.threading_isrunning = False
          # self.reload_inputs()
@@ -171,6 +173,7 @@ class AppMain(ft.Container):
             print(f"Error::::::::::::: {e}")
 
       elif data == 1: #scan
+         self.reload_inputs(data)
          self.container_scan.capture = VideoCapture(0)
          self.container_scan.threading_isrunning = True
          self.container_scan.threading = threading.Thread(target=self.container_scan.fun_update_frame_camera)
@@ -219,7 +222,7 @@ class AppMain(ft.Container):
 
    def change_content_user(self, e): #cambiar el contenido desde el nav-vertical
       data = int(e.data)
-      if data == 0:
+      if data == 0: #About project
          print(self.user)
          print(self.user_name)
          print(self.user_type)
@@ -230,8 +233,8 @@ class AppMain(ft.Container):
          except Exception as e:
             print(f"Error::::::::::::: {e}")
 
-      elif data == 1:
-         # self.cont_main.content = ft.Text("Scan Containt", size=30, color= ft.colors.RED_700)
+      elif data == 1: #Scan
+         self.reload_inputs(data)
          self.container_scan.capture = VideoCapture(0)
          self.container_scan.threading_isrunning = True
          self.container_scan.threading = threading.Thread(target=self.container_scan.fun_update_frame_camera)

@@ -1,0 +1,220 @@
+{
+    "1": {
+        "20": {
+            "fecha": "2024-11-20",
+            "hora": "14:49",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        }
+    },
+    "2": {
+        "2": {
+            "fecha": "2024-11-20",
+            "hora": "14:58",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        },
+        "3": {
+            "fecha": "2024-11-20",
+            "hora": "14:58",
+            "documento": "1001152975",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": false
+        }
+    },
+    "3": {
+        "1": {
+            "fecha": "2024-11-20",
+            "hora": "14:58",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        },
+        "2": {
+            "fecha": "2024-11-20",
+            "hora": "14:58",
+            "documento": "1001152975",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": false
+        }
+    },
+    "4": {
+        "1": {
+            "fecha": "2024-11-20",
+            "hora": 8,
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "2": {
+            "fecha": "2024-11-20",
+            "hora": "8:36",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "3": {
+            "fecha": "2024-11-20",
+            "hora": "8:38",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "4": {
+            "fecha": "2024-11-20",
+            "hora": "9:10",
+            "documento": "1001033967",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "5": {
+            "fecha": "2024-11-20",
+            "hora": "9:24",
+            "documento": "1001595812",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "6": {
+            "fecha": "2024-11-20",
+            "hora": "10:23",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "7": {
+            "fecha": "2024-11-20",
+            "hora": "10:23",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "8": {
+            "fecha": "2024-11-20",
+            "hora": "10:35",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "9": {
+            "fecha": "2024-11-20",
+            "hora": "10:35",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "10": {
+            "fecha": "2024-11-20",
+            "hora": "10:35",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "11": {
+            "fecha": "2024-11-20",
+            "hora": "10:36",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "12": {
+            "fecha": "2024-11-20",
+            "hora": "10:36",
+            "documento": "1040358267",
+            "horario": "out",
+            "is_beneficiario": true
+        },
+        "13": {
+            "fecha": "2024-11-20",
+            "hora": "11:43",
+            "documento": "1001152975",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": false
+        },
+        "14": {
+            "fecha": "2024-11-20",
+            "hora": "11:44",
+            "documento": "1001152975",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": false
+        },
+        "15": {
+            "fecha": "2024-11-20",
+            "hora": "11:53",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        },
+        "16": {
+            "fecha": "2024-11-20",
+            "hora": "11:53",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        },
+        "17": {
+            "fecha": "2024-11-20",
+            "hora": "11:55",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        },
+        "18": {
+            "fecha": "2024-11-20",
+            "hora": "11:56",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        },
+        "19": {
+            "fecha": "2024-11-20",
+            "hora": "11:56",
+            "documento": "1040358267",
+            "horario": "ma\u00f1ana",
+            "is_beneficiario": true
+        },
+        "20": {
+            "fecha": "2024-11-20",
+            "hora": "15:6",
+            "documento": "1002086953",
+            "horario": "tarde",
+            "is_beneficiario": true
+        }
+    },
+    "5": {
+        "1": {
+            "fecha": "2024-11-20",
+            "hora": "22:53",
+            "documento": "1040358267",
+            "horario": "tarde",
+            "is_beneficiario": true
+        },
+        "2": {
+            "fecha": "2024-11-20",
+            "hora": "22:55",
+            "documento": "1040358267",
+            "horario": "tarde",
+            "is_beneficiario": true
+        }
+    },
+    "6": {},
+    "7": {
+        "1": {
+            "fecha": "2024-11-20",
+            "hora": "23:6",
+            "documento": "1040358267",
+            "horario": "tarde",
+            "is_beneficiario": true
+        }
+    },
+    "8": {
+        "2": {
+            "fecha": "2024-11-20",
+            "hora": "23:8",
+            "documento": "1040358267",
+            "horario": "tarde",
+            "is_beneficiario": true
+        }
+    }
+}
