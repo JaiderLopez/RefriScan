@@ -1,6 +1,6 @@
 {
     "1000192208": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -55,6 +55,10 @@
             [
                 "sabado",
                 "tarde"
+            ],
+            [
+                "jueves",
+                "ma\u00f1ana"
             ]
         ],
         "is_beneficiario": true
@@ -88,7 +92,7 @@
         "is_beneficiario": true
     },
     "1001022313": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -110,7 +114,7 @@
         "is_beneficiario": true
     },
     "1001026608": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -154,7 +158,7 @@
         "is_beneficiario": true
     },
     "1001027974": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -208,7 +212,7 @@
         "is_beneficiario": true
     },
     "1001030015": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -262,7 +266,7 @@
         "is_beneficiario": true
     },
     "1001030737": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -306,7 +310,7 @@
         "is_beneficiario": true
     },
     "1001032334": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -328,7 +332,7 @@
         "is_beneficiario": true
     },
     "1001032799": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -350,7 +354,7 @@
         "is_beneficiario": true
     },
     "1001033967": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -372,7 +376,7 @@
         "is_beneficiario": true
     },
     "1001152975": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -399,7 +403,7 @@
                 "tarde"
             ]
         ],
-        "is_beneficiario": false
+        "is_beneficiario": true
     },
     "1001153936": {
         "faltas": 0,
@@ -424,7 +428,7 @@
         "is_beneficiario": true
     },
     "1001595812": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "miercoles",
@@ -468,7 +472,7 @@
         "is_beneficiario": true
     },
     "1001667529": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -504,7 +508,7 @@
         "is_beneficiario": true
     },
     "1001668798": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "miercoles",
@@ -566,7 +570,7 @@
         "is_beneficiario": true
     },
     "1001672930": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -588,7 +592,7 @@
         "is_beneficiario": true
     },
     "1002086953": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -632,7 +636,7 @@
         "is_beneficiario": true
     },
     "1003291209": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "miercoles",
@@ -676,7 +680,7 @@
         "is_beneficiario": true
     },
     "1007413503": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -698,7 +702,7 @@
         "is_beneficiario": true
     },
     "1007427152": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -720,7 +724,7 @@
         "is_beneficiario": true
     },
     "1007437144": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -742,7 +746,7 @@
         "is_beneficiario": true
     },
     "1007446434": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -764,7 +768,7 @@
         "is_beneficiario": true
     },
     "1007649530": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -786,7 +790,7 @@
         "is_beneficiario": true
     },
     "1007746468": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -808,7 +812,7 @@
         "is_beneficiario": true
     },
     "1007747777": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -830,7 +834,7 @@
         "is_beneficiario": true
     },
     "1007843771": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -852,7 +856,7 @@
         "is_beneficiario": true
     },
     "1007853264": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -874,7 +878,7 @@
         "is_beneficiario": true
     },
     "1007853300": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -896,7 +900,7 @@
         "is_beneficiario": true
     },
     "1010159033": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -918,7 +922,7 @@
         "is_beneficiario": true
     },
     "1018222754": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -958,7 +962,7 @@
         "is_beneficiario": true
     },
     "102793825": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -980,7 +984,7 @@
         "is_beneficiario": true
     },
     "1027940882": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1024,7 +1028,7 @@
         "is_beneficiario": true
     },
     "1027943263": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1046,7 +1050,7 @@
         "is_beneficiario": true
     },
     "1027943777": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1090,7 +1094,7 @@
         "is_beneficiario": true
     },
     "1027945956": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1156,7 +1160,7 @@
         "is_beneficiario": true
     },
     "1027949463": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1178,7 +1182,7 @@
         "is_beneficiario": true
     },
     "1027949995": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1200,7 +1204,7 @@
         "is_beneficiario": true
     },
     "1027950663": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1222,7 +1226,7 @@
         "is_beneficiario": true
     },
     "1027960038": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1244,7 +1248,7 @@
         "is_beneficiario": true
     },
     "1028032722": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -1288,7 +1292,7 @@
         "is_beneficiario": true
     },
     "1028037945": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -1310,7 +1314,7 @@
         "is_beneficiario": true
     },
     "1028039420": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1332,7 +1336,7 @@
         "is_beneficiario": true
     },
     "1032176354": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1430,7 +1434,7 @@
         "is_beneficiario": true
     },
     "1037116099": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1558,7 +1562,7 @@
         "is_beneficiario": true
     },
     "1001027629": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1606,7 +1610,7 @@
         "is_beneficiario": true
     },
     "1038821196": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -1686,7 +1690,7 @@
         "is_beneficiario": true
     },
     "1040351705": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1708,7 +1712,7 @@
         "is_beneficiario": true
     },
     "1040360060": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1730,7 +1734,7 @@
         "is_beneficiario": true
     },
     "1040361504": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1774,7 +1778,7 @@
         "is_beneficiario": true
     },
     "1040373010": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "miercoles",
@@ -1796,7 +1800,7 @@
         "is_beneficiario": true
     },
     "1040379360": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -1814,7 +1818,7 @@
         "is_beneficiario": true
     },
     "1040379490": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1836,7 +1840,7 @@
         "is_beneficiario": true
     },
     "1040380619": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1872,7 +1876,7 @@
         "is_beneficiario": true
     },
     "1040381834": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1894,7 +1898,7 @@
         "is_beneficiario": true
     },
     "1040381881": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1916,7 +1920,7 @@
         "is_beneficiario": true
     },
     "1040490818": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1938,7 +1942,7 @@
         "is_beneficiario": true
     },
     "1045516488": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1960,7 +1964,7 @@
         "is_beneficiario": true
     },
     "1045521701": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -1982,7 +1986,7 @@
         "is_beneficiario": true
     },
     "1045523730": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2004,7 +2008,7 @@
         "is_beneficiario": true
     },
     "1046526144": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2026,7 +2030,7 @@
         "is_beneficiario": true
     },
     "1046526976": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2048,7 +2052,7 @@
         "is_beneficiario": true
     },
     "1050947624": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2070,7 +2074,7 @@
         "is_beneficiario": true
     },
     "1068823887": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2092,7 +2096,7 @@
         "is_beneficiario": true
     },
     "1108559343": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2212,7 +2216,7 @@
         "is_beneficiario": true
     },
     "1193280955": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "martes",
@@ -2234,7 +2238,7 @@
         "is_beneficiario": true
     },
     "1193331146": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2278,7 +2282,7 @@
         "is_beneficiario": true
     },
     "1193536589": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2314,7 +2318,7 @@
         "is_beneficiario": true
     },
     "1027943233": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2350,7 +2354,7 @@
         "is_beneficiario": true
     },
     "1020222848": {
-        "faltas": 3,
+        "faltas": 1,
         "horario": [
             [
                 "lunes",
@@ -2416,5 +2420,19 @@
             ]
         ],
         "is_beneficiario": true
+    },
+    "1193347683": {
+        "faltas": 0,
+        "horario": [
+            [
+                "jueves",
+                "ma\u00f1ana"
+            ],
+            [
+                "jueves",
+                "tarde"
+            ]
+        ],
+        "is_beneficiario": false
     }
 }

@@ -5,6 +5,7 @@ from interfaces.class_login import Login
 from interfaces.class_about import About_project
 from interfaces.class_table_estudent import TableEstudent
 from interfaces.class_config_credencial import UserManagerApp, data_get
+from interfaces.class_analitica import Analitica
 import threading
 import time
 
@@ -22,6 +23,7 @@ class AppMain(ft.Container):
       self.container_about = About_project(self.page)
       self.container_table = TableEstudent(self.page)
       self.container_config = UserManagerApp(self.page)
+      self.container_analitica = Analitica(self.page)
       ...
       #           nav_rail
       ## nav_user
@@ -156,6 +158,8 @@ class AppMain(ft.Container):
          self.container_scan.reload_data_scanner()
       if dato == 2:
          self.container_table.reload()
+      if dato == 3:
+         self.container_analitica.reload_data()
       if dato == 4:
          self.container_config.reload_inputs()
          self.container_config.hint_imputs()
@@ -190,7 +194,8 @@ class AppMain(ft.Container):
             print(f"Error::::::::::::: {e}")
 
       elif data == 3: #analitycs
-         self.cont_main.content = ft.Text("Analitycs Containt", size=30, color= ft.colors.RED_700)
+         self.reload_inputs(data)
+         self.cont_main.content = self.container_analitica.content
          self.container_scan.threading_isrunning = False
          try:
             self.container_scan.capture.release()

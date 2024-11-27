@@ -52,6 +52,8 @@ class Reclamos:
          horario = "mañana" if time < 15 else "tarde"
       if self.horario == None:
          self.horario = horario
+      if minutos < 10:
+         minutos = "0" + str(minutos)
 
       hora = ''.join([str(time), ':',str(minutos)])
       

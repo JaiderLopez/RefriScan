@@ -251,6 +251,7 @@ class TableEstudent(ft.Container):
             datos = {
                "faltas": 0,
                "horario": self.horario,
+               "is_beneficiario": True
             }
             self.data[self.doc] = datos
             data_set(self.data)
