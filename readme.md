@@ -66,15 +66,15 @@ El proyecto es desarrollado por un equipo de estudiantes avanzados de **Ingenier
 ## Imágenes de las Interfaces 🖼️
 A continuación, se presentarán las principales **interfaces del sistema** 
 1. **Interfaz de Inicio**
-   ![Login](imgs\to_md\login.PNG)
+   ![Login](imgs/to_md/login.PNG)
 2. **Módulo de Escaneo**
-   ![Escaneo](imgs\to_md\scan_view.PNG)
+   ![Escaneo](imgs/to_md/scan_view.PNG)
 3. **Generación de Reportes**
-   ![Reportes](imgs\to_md\analitycs_view.PNG)
+   ![Reportes](imgs/to_md/analitycs_view.PNG)
 4. **Panel de Control y Administración**
-   ![Users](imgs\to_md\users_control_view.PNG)
+   ![Users](imgs/to_md/users_control_view.PNG)
 5. **About**
-   ![About Project](imgs\to_md\admin_modul.PNG)
+   ![About Project](imgs/to_md/admin_modul.PNG)
 
 ---
 
