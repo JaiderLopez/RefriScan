@@ -69,6 +69,10 @@
             [
                 "sabado",
                 "ma\u00f1ana"
+            ],
+            [
+                "lunes",
+                "ma\u00f1ana"
             ]
         ],
         "is_beneficiario": true
@@ -194,16 +198,6 @@
                 "viernes",
                 "tarde"
             ],
-            [
-                "sabado",
-                "ma\u00f1ana"
-            ]
-        ],
-        "is_beneficiario": true
-    },
-    "1001028830": {
-        "faltas": 0,
-        "horario": [
             [
                 "sabado",
                 "ma\u00f1ana"

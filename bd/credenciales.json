@@ -1,29 +1,17 @@
 {
-    "1001152975": {
-        "password": "1001.pswd",
-        "type": "admin",
-        "name": "Jaider Lopez",
-        "is_activate": true
-    },
-    "1040358267": {
-        "password": "1040.pswd",
+    "2": {
+        "password": "2",
         "type": "user",
-        "name": "Santiago Perez",
-        "is_activate": true
+        "name": "Lisa Does"
     },
     "1": {
         "password": "1",
         "type": "admin",
         "name": "John Doe"
     },
-    "2": {
-        "password": "2",
-        "type": "user",
-        "name": "Lisa Does"
-    },
-    "3": {
-        "password": "3",
+    "1001152975": {
+        "password": "1001.pswd",
         "type": "admin",
-        "name": "Prueba"
+        "name": "Jaider Lopez"
     }
 }

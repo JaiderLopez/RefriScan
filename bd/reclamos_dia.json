@@ -1,1 +1,9 @@
-{}
+{
+    "1": {
+        "fecha": "2024-11-27",
+        "hora": "11:09",
+        "documento": "1040358267",
+        "horario": "ma\u00f1ana",
+        "is_beneficiario": true
+    }
+}
